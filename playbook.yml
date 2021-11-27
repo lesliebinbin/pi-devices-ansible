@@ -1,0 +1,58 @@
+---
+- hosts: pi-devices
+  pre_tasks:
+    - name: Update apt cache if needed.
+      apt: update_cache=yes cache_valid_time=3600
+      become: yes
+    - name: Upgrade current architecture
+      apt: upgrade=dist
+      become: yes
+    - name: Update Pi password
+      become: yes
+      user:
+        name: pi
+        password: "{{ 'Woainvren1' | password_hash('sha512') }}"
+    - name: Update Root password
+      become: yes
+      user:
+        name: root
+        password: "{{ 'Woainvren1' | password_hash('sha512') }}"
+  tasks:
+    - name: Install necessary apt packages
+      become: yes
+      register: apt_worker
+      apt:
+        state: present
+        name:
+          - openssl
+          - autoconf
+          - libtool
+          - libreadline-dev
+          - network-manager
+          - wireless-tools
+          - net-tools
+          - libgdbm-dev
+          - bison
+          - automake
+          - git
+          - curl
+          - zlib1g-dev
+          - libssl-dev
+          - libubertooth-dev
+          - ubertooth
+          - uthash-dev
+          - openvpn
+          - python3-dev
+          - python3-pip
+          - mlocate
+          - cmake
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+    - name: Install AWS Iot Sdk for python3
+      become: yes
+      pip:
+        name: awsiotsdk
+    - name: Install Python package schedule
+      become: yes
+      pip:
+        name: schedule

@@ -1,0 +1,5 @@
+sdcard:
+  mount_points:
+    - /media/lesliebinbin
+  headless_configs:
+    - boot-config
