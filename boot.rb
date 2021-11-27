@@ -9,7 +9,7 @@ def boot
     headless_configs.each do |h_config|
       puts h_config
       Dir["#{h_config}/*"].each do |filename|
-        FileUtils.cp(filename, "#{m_point}/boot")
+        FileUtils.cp(filename, "#{m_point}/")
       end
     end
   end
